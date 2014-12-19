@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.manager.model.MShopLocation" table="M_SHOP_LOCATION">
+		<id name="locationId" >
+			<generator class="increment"/>
+		</id>
+		
+		<property name="locationNo" type="java.lang.String" column="LOCATIONNO" />
+		<property name="shopId" type="java.lang.Integer" column="SHOPID" />
+		<property name="registerDate" type="java.util.Date" column="REGISTERDATE" />
+		<property name="registerUser" type="java.lang.String" column="REGISTERUSER" />
+        <property name="comment" type="java.lang.String" column="COMMENT" />
+	</class>
+</hibernate-mapping>

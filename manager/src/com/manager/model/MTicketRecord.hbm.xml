@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.manager.model.MTicketRecord" table="M_TICKET_RECORD">
+		<id name="recordId" >
+			<generator class="increment"/>
+		</id>
+		
+		<property name="cardId" type="java.lang.String" column="CARDID" />
+		<property name="giftName" type="java.lang.String" column="GIFTNAME" />
+		<property name="count" type="java.lang.Integer" column="COUNT" />
+		<property name="score" type="java.lang.Integer" column="SCORE" />
+		<property name="balanceScore" type="java.lang.Integer" column="BALANCESCORE" />
+		<property name="userId" type="java.lang.String" column="USERID" />
+		<property name="status" type="java.lang.Integer" column="STATUS" />
+		<property name="printDate" type="java.util.Date" column="PRINTDATE" />
+	</class>
+</hibernate-mapping>

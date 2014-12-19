@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.manager.model.MLossReport" table="M_LOSS_REPORT">
+		<id name="recordId" >
+			<generator class="increment"/>
+		</id>
+		
+		<property name="memberId" type="java.lang.Integer" column="MEMBERID" />
+		<property name="type" type="java.lang.Integer" column="TYPE" />
+		<property name="cardId" type="java.lang.String" column="CARDID" />
+		<property name="comment" type="java.lang.String" column="COMMENT" />
+		<property name="recordDate" type="java.util.Date" column="RECORDDATE" />
+		<property name="userId" type="java.lang.String" column="USERID" />
+		<property name="status" type="java.lang.Integer" column="STATUS" />
+		<property name="verifyStatus" type="java.lang.Integer" column="VERIFYSTATUS" />
+		<property name="verifier" type="java.lang.String" column="VERIFIER" />
+	</class>
+</hibernate-mapping>

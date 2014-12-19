@@ -1,0 +1,246 @@
+/*
+$Id: general.css 13504 2007-11-08 09:51:13Z weberliu $
+*/
+body,p,th,td,input,select,radio,textarea {
+	margin: 0px;;
+	padding: 0px;
+	font: normal normal 12px "SimSun";
+}
+#centerFrame {
+	width: 80px;
+	margin-left: auto;
+	margin-right: auto;
+}
+th, td{
+	font-size: 12px;
+	font-weight: 400;
+	word-break: break-all;
+}
+body {
+	background-color: #FFF;
+}
+
+img {
+	border-width: medium;
+	border-style: none;
+	border-color: -moz-use-text-color;
+	margin: 0px;;
+	padding: 0px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	margin: 0;
+	padding: 0;
+	font-size: 14px;
+}
+
+ul,dl,ol,form {
+	margin: 0;
+	padding: 0;
+}
+
+ul li,ol li {
+	list-style-type: none;
+}
+
+dl dt,dl dd {
+	margin: 0;
+	padding: 0;
+}
+
+table {
+	text-align: left;
+}
+form {
+	margin: 0px;
+	padding: 0px;
+}
+a:visited {
+	color: #335B64;
+	text-decoration: none;
+}
+.imeDisabled{
+	ime-mode:disabled;
+}
+a:link {
+	color: #335B64;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #EB8A3D;
+	text-decoration: underline;
+}
+
+a:active {
+	color: #EB8A3D;
+	text-decoration: underline;
+}
+
+.clear {
+	clear: both;
+	float: none;
+	font-size: 0px;
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+
+.imeDisabled{
+	ime-mode:disabled
+}
+#headSearcher {
+	margin: 10px auto;
+	width: 1002px;
+	text-align: left;
+	color: #206CD0;
+}
+#webLocation {
+	font: normal normal 15px "ºÚÌå";
+	color: #206CD0;
+}
+#smallLogo {
+	float: left;
+	width: 180px;
+}
+#webLocationId-name{
+	height: 12px;
+}
+#cityEntryAndWelcomeInfo {
+	float: left;
+	width: 450px;
+	padding-left: 20px;
+}
+#welcomeInfo,#welcomeInfo a {
+	font:normal normal 12px "ËÎÌå";
+	color: #206CD0;
+	padding-top: 8px;
+}
+.welcomedUserName{
+	color: #00742C;
+	padding: 0px 5px;
+}
+#searchModeBanner {
+
+}
+#searchModeBanner ul {
+	list-style-type: none;
+}
+#searchModeBanner li {
+	float: left;
+	display: list-item;
+	list-style-type: none;
+	text-align: center;
+	margin-top: 9px;
+	margin-right: 3px;
+	cursor: pointer;
+}
+#searchModeBanner h3{
+	font-size: 16px;
+	padding-top: 9px;
+}
+.searchFront {
+	background-image: url(/images/isFront.gif);
+	color: #D1E8FE;
+	width: 120px;
+	height: 35px;
+}
+.searchBack {
+	background-image: url(/images/isBack.gif);
+	color: #2972D3;
+	width: 120px;
+	height: 35px;	
+}
+div.navigation {
+	font-size: 12px;
+	height: 0px;
+	margin: 0px;
+	padding-top: 30px;
+	text-align: center;
+	text-indent: 0;
+	position: relative;
+	float: right;
+}
+#searcherBanner {
+	width: 1002px;
+	height: 45px;
+	background-color: #206CD0;
+}
+#searcherBanner #keyword {
+	display: block;
+	height: 25px;
+	width: 520px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #417cc3;
+	font-size: 24px;
+	margin-top: 8px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 20px;
+	float: left;
+}
+#searcherBanner #goSearch {
+	margin-top: 9px;
+	margin-right: 0pt;
+	margin-bottom: 10px;
+	margin-left: 0pt;
+	float: left;
+}
+#searcherBanner a{
+	font:normal normal 15px "ºÚÌå";
+	display: block;
+	word-spacing: 5px;
+	margin: 14px 0px 0px 15px;
+	float: left;
+	color: #ddf0ff;
+}
+#searcherBanner a:link {
+	text-decoration: none;
+}
+#mainContainer {
+	margin: 0px auto;
+	width: 1002px;
+}
+.webLocationButton {
+	color: #FFFFFF;
+	font-size: 13px;
+	background-image: url(/images/cityEntry.gif); 
+	border: 0px; 
+	width: 89px; 
+	height: 23px;
+}
+.dock {
+	position: relative; height: 50px; text-align: center
+}
+.dock-container {
+	padding-left: 20px; position: absolute; height: 50px
+}
+A.dock-item {
+	display: block; FONT: bold 12px Arial, Helvetica, sans-serif; width: 40px; color: #000; position: absolute; TOP: 0px; text-align: center; text-decoration: none
+}
+.dock-item img {
+	margin: 5px 10px 0px; width: 100%; border-top-style: none; border-right-style: none; border-left-style: none; border-bottom-style: none
+}
+.dock-item span {
+	display: none; padding-left: 20px
+}
+#dock {
+	left: 0px; width: 100%; bottom: 0px; position: absolute
+}
+.dock-container {
+	padding-left: 20px; position: absolute; height: 50px
+}
+A.dock-item2 {
+	display: block; FONT: bold 12px Arial, Helvetica, sans-serif; width: 40px; color: #000; botton: 0px; position: absolute; text-align: center; text-decoration: none
+}
+.dock-item2 span {
+	display: none; padding-left: 20px
+}
+.dock-item2 img {
+	margin: 5px 10px 0px; width: 100%; border-top-style: none; border-right-style: none; border-left-style: none; border-botton-style: none
+}

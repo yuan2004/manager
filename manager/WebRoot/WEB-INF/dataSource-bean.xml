@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- 读入属性文件 -->
+	<bean id="propertyConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:hibernate.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 配置数据源，可以其他方式 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${hibernate.driverClassName}"></property>
+		<property name="jdbcUrl" value="${hibernate.url}"></property>
+		<property name="user" value="${hibernate.username}"></property>
+		<property name="password" value="${hibernate.password}"></property>
+		<property name="maxPoolSize" value="${hibernate.maxPoolSize}"></property>
+		<property name="minPoolSize" value="${hibernate.minPoolSize}"></property>
+		<property name="initialPoolSize" value="${hibernate.initialPoolSize}"></property>
+		<property name="maxIdleTime" value="${hibernate.maxIdleTime}"></property>
+	</bean>
+
+	<!-- 配置Hibernate的Session工厂，注入数据源、映射文件 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/manager/model/MUserInfo.hbm.xml</value>
+				<value>com/manager/model/MGiftInfo.hbm.xml</value>
+				<value>com/manager/model/MShopInfo.hbm.xml</value>
+				<value>com/manager/model/MShopLocation.hbm.xml</value>
+				<value>com/manager/model/MShopBrand.hbm.xml</value>
+				<value>com/manager/model/MMemberInfo.hbm.xml</value>
+				<value>com/manager/model/MScoreLine.hbm.xml</value>
+				<value>com/manager/model/MScoreModify.hbm.xml</value>
+				<value>com/manager/model/MExchangeLine.hbm.xml</value>
+				<value>com/manager/model/MLossReport.hbm.xml</value>
+				<value>com/manager/model/MTicketRecord.hbm.xml</value>
+				<value>com/manager/model/MGiftRecord.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.showSQL}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 声明Hibernate事务管理，注入Session工厂 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- 配置事务代理，注入事务管理transactionManager，由Spring来代理事务，设置事务属性 -->
+	<bean id="transactionProxy" abstract="true" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="remove*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="create*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="query*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="load*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- JDBC模板 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+</beans>

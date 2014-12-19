@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    
+	<!-- ================DAO配置文件================ -->
+	<bean id="baseDao" class="com.manager.dao.BaseDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate" />
+		</property>
+	</bean>
+	
+	<bean id="userDao" class="com.manager.dao.UserDao" parent="baseDao" />
+	
+	<bean id="giftDao" class="com.manager.dao.GiftDao" parent="baseDao" />
+	
+	<bean id="shopDao" class="com.manager.dao.ShopDao" parent="baseDao" />
+	
+	<bean id="shopLocationDao" class="com.manager.dao.ShopLocationDao" parent="baseDao" />
+	
+	<bean id="shopBrandDao" class="com.manager.dao.ShopBrandDao" parent="baseDao" />
+	
+	<bean id="memberDao" class="com.manager.dao.MemberDao" parent="baseDao" />
+	
+	<bean id="scoreLineDao" class="com.manager.dao.ScoreLineDao" parent="baseDao" />
+	
+	<bean id="reportDao" class="com.manager.dao.ReportDao" parent="baseDao" />
+
+</beans>

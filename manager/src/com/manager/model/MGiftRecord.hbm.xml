@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.manager.model.MGiftRecord" table="M_GIFT_RECORD">
+		<id name="recordId" >
+			<generator class="increment"/>
+		</id>
+		
+		<property name="giftId" type="java.lang.String" column="GIFTID" />
+		<property name="giftName" type="java.lang.String" column="GIFTNAME" />
+		<property name="reserve" type="java.lang.Integer" column="RESERVE" />
+		<property name="score" type="java.lang.Integer" column="SCORE" />
+		<property name="photo" type="java.lang.String" column="PHOTO" />
+		<property name="registerDate" type="java.util.Date" column="REGISTERDATE" />
+		<property name="registerUser" type="java.lang.String" column="REGISTERUSER" />
+		<property name="modifyDate" type="java.util.Date" column="MODIFYDATE" />
+		<property name="modifyUser" type="java.lang.String" column="MODIFYUSER" />
+        <property name="comment" type="java.lang.String" column="COMMENT" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,155 @@
+package com.manager.sms;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import montnets.mondem;
+
+
+public class TestSms extends Thread{
+	
+	//连接的参数
+	private String mySQLDriver = "org.gjt.mm.mysql.Driver";
+
+	private String connURL = "jdbc:mysql://127.0.0.1:3306/manager";
+
+	private String userName = "root";
+
+	private String pwd = "adminsa";
+
+	private Connection conn = null;
+
+	private ResultSet rs = null;
+	
+	private String flag = "";
+	
+	// 在构造方法里加载驱动
+	public TestSms() {
+		try {
+			Class.forName(mySQLDriver);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void run() {
+		sent();
+	}
+
+	public void sent() {
+		mondem Mytest = new mondem(); // 创建一个 mondem 对象， 这个对象最大可以支持64个端口发送
+		int rc;
+		rc = Mytest.SetThreadMode(1); // 开启线程模式
+		if (rc == 0) {
+			System.out.println("设置线程模式成功");
+		} else {
+			System.out.println("设置线程模式失败");
+			return;
+		}
+
+		// 全都设置成单口猫格式
+		Mytest.SetModemType(0, 0);
+		Mytest.SetModemType(1, 0);
+		Mytest.SetModemType(2, 0);
+		Mytest.SetModemType(3, 0);
+		Mytest.SetModemType(4, 0);
+		Mytest.SetModemType(5, 0);
+		Mytest.SetModemType(6, 0);
+		Mytest.SetModemType(7, 0);
+		Mytest.SetModemType(8, 0);
+		Mytest.SetModemType(9, 0);
+
+//		 初始化短信猫
+		if ((rc = (Mytest.InitModem(-1))) == 0){
+			System.out.println("初始化成功");
+			// --------普通短信测试-------------
+			List list = this.loadMobileByDb();
+			for (int i = 0; i < list.size(); i++) {
+				String[] sms = (String[]) list.get(i);
+				rc = Mytest.SendMsg(-1, sms[0], sms[1]); // 发送一条信息,从可以使用的任意端口
+			}
+
+			if (rc >= 0) {
+				System.out.println("提交成功, rc=" + rc);
+				int i = 0;
+				// 循环等待发送成功,并显示接收信息, Ctrl-C 退出循环
+				while (true) {
+					String[] s = Mytest.ReadMsgEx(-1);
+					if (s[0].equals("-1")) {
+						System.out.println("-无信息-----");
+					} else {
+						i ++;
+						System.out.println(s[0]);
+						System.out.println(s[1]);
+						System.out.println(s[2]);
+						if(i >= list.size()) {
+							System.out.println("已全部发送。。。。。。" + i);
+							break;
+						}
+					}
+					System.out.println("...."
+							+ // 显示各个端口的状态
+							Mytest.GetStatus(0) + "," + Mytest.GetStatus(1)
+							+ "," + Mytest.GetStatus(2) + ","
+							+ Mytest.GetStatus(3) + "," + Mytest.GetStatus(4)
+							+ "," + Mytest.GetStatus(5) + ","
+							+ Mytest.GetStatus(6) + "," + Mytest.GetStatus(7)
+							+ "....");
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+					} // 延时等待
+				}
+			} else {
+				System.out.println("提交错误, rc=" + rc);
+			}
+		} else {
+			System.out.println("初始化错误!" + rc);
+		}
+	}
+	
+	public List loadMobileByDb() {
+		ResultSet rs = this.executeQuery("select * from M_SMS_RECORD where flag='" + flag +"'");
+		List list = new ArrayList();
+		try {
+			while (rs.next()) {
+				String[] str = new String[2];
+				str[0] = rs.getString("mobile");
+				str[1] = rs.getString("sms");
+				System.out.println("" + str[0] + " || " + str[1]);
+				list.add(str);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	// 执行sqlString,返回数据集
+	public ResultSet executeQuery(String sqlString) {
+		rs = null;
+		try {
+			conn = DriverManager.getConnection(connURL, userName, pwd);
+			Statement stmt = conn.createStatement();
+			rs = stmt.executeQuery(sqlString);
+		} catch (SQLException ex) {
+			System.err.println("aq.executeQuery:" + ex.getMessage());
+		}
+
+		return rs;
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+
+}

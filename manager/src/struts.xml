@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <constant name="struts.action.extension" value="action" />
+    <constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory" />
+    <constant name="struts.i18n.encoding" value="GBK"></constant>
+    
+	<package name="default" namespace="/" extends="struts-default">
+		<interceptors>
+			<interceptor name="rumTime" class="com.manager.interceptor.RunTimeInterceptor"/>
+			<interceptor name="login" class="com.manager.interceptor.LoginInterceptor"/>
+			<interceptor-stack name="validationStack">
+				<interceptor-ref name="rumTime" />
+				<interceptor-ref name="params" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods"></param>
+				</interceptor-ref>
+				<interceptor-ref name="model-driven" />
+				<interceptor-ref name="chain" />			
+			</interceptor-stack>
+			
+			<interceptor-stack name="methodStack">
+				<interceptor-ref name="login" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="methodStack" />
+		<global-results>
+			<result name="error">/error.jsp</result>
+			<result name="roleError">/roleError.jsp</result>
+			<result name="nologin" type="redirect">/logout.jsp</result>
+        </global-results>
+        
+		<action name="login" class="com.manager.action.UserAction" method="login">
+    	</action>
+    	
+    	<action name="quickLogout" class="com.manager.action.UserAction" method="quickLogout">
+		</action>
+    	
+    	<action name="checkMustValidate" class="com.manager.action.UserAction" method="checkMustValidate">
+    	</action>
+    	
+    	<action name="queryMemberScore" class="com.manager.action.MemberAction" method="queryMemberScore">
+    		<interceptor-ref name="defaultStack" />
+    	</action>
+    	
+	</package>
+	
+	<package name="user" namespace="/user" extends="default">
+		<action name="gotoAddUser" class="com.manager.action.UserAction" method="gotoAddUser">
+    		<result name="success">addUser.jsp</result>
+    	</action>
+    	
+    	<action name="addUser" class="com.manager.action.UserAction" method="addUser">
+    		<result name="success" type="chain">queryUserByLoginName</result>
+    	</action>
+    	
+    	<action name="queryUserByLoginName" class="com.manager.action.UserAction" method="queryUserByLoginName">
+    		<result name="success">manageUser.jsp</result>
+    	</action>
+    	
+    	<action name="gotoEditUser" class="com.manager.action.UserAction" method="gotoEditUser">
+    		<result name="success">editUser.jsp</result>
+    	</action>
+    	
+    	<action name="abateUser" class="com.manager.action.UserAction" method="abateUser">
+    		<result name="success" type="chain">queryUserByLoginName</result>
+		</action>
+		
+		<action name="changePassword" class="com.manager.action.UserAction" method="changePassword">	
+		</action>
+		
+		<action name="editUser" class="com.manager.action.UserAction" method="editUser">
+    		<result name="success" type="chain">queryUserByLoginName</result>
+    	</action>
+    	
+    	<action name="isExistLoginName" class="com.manager.action.UserAction" method="isExistLoginName">
+    	</action>
+    	
+    	<action name="queryExistEmployeeId" class="com.manager.action.UserAction" method="queryExistEmployeeId">
+    	</action>
+    	
+    	<action name="auditUser" class="com.manager.action.UserAction" method="auditUser">
+    		<result name="success" type="chain">queryUserByLoginName</result>
+		</action>
+        
+	</package>
+	
+	<package name="member" namespace="/member" extends="default">
+		<!-- Gift -->
+		<action name="gotoAddGift" class="com.manager.action.GiftAction" method="jump">
+    		<result name="success">addGift.jsp</result>
+    	</action>
+    	
+    	<action name="addGift" class="com.manager.action.GiftAction" method="addGift">
+    		<result name="success" type="chain">queryGiftByName</result>
+    	</action>
+    	
+    	<action name="queryGiftByName" class="com.manager.action.GiftAction" method="queryGiftByName">
+    		<result name="success">giftList.jsp</result>
+    	</action>
+    	
+    	<action name="queryGiftRecordByName" class="com.manager.action.GiftAction" method="queryGiftRecordByName">
+    		<result name="success">giftRecordList.jsp</result>
+    	</action>
+    	
+    	<action name="gotoEditGift" class="com.manager.action.GiftAction" method="gotoEditGift">
+    		<result name="success">editGift.jsp</result>
+    	</action>
+    	
+    	<action name="editGift" class="com.manager.action.GiftAction" method="editGift">
+    		<result name="success" type="chain">queryGiftByName</result>
+    	</action>
+    	
+    	<action name="gotoAddExchange" class="com.manager.action.GiftAction" method="jump">
+    		<result name="success">managerGift.jsp</result>
+    	</action>
+    	
+    	<action name="queryGiftByScore" class="com.manager.action.GiftAction" method="queryGiftByScore">
+    		<result name="success">managerGift.jsp</result>
+    	</action>
+    	
+    	<action name="queryManagerGift" class="com.manager.action.GiftAction" method="queryGiftByName">
+    		<result name="success">managerGift.jsp</result>
+    	</action>
+    	
+    	<action name="exchangeGift" class="com.manager.action.GiftAction" method="exchangeGift">
+    		<result name="success">success.jsp</result>
+    	</action>
+    	
+    	<action name="isExistGift" class="com.manager.action.GiftAction" method="isExistGift">
+    	</action>
+    	
+    	<action name="exchangeGiftSuccess" class="com.manager.action.GiftAction" method="jump">
+    		<!-- <result name="success">pdf.jsp</result> -->
+    		<result name="success">exchangeSuccess.jsp</result>
+    	</action>
+    	
+    	<action name="queryTicketList" class="com.manager.action.GiftAction" method="queryTicketList">
+    		<result name="success">ticketList.jsp</result>
+    	</action>
+    	
+    	<action name="printTicket" class="com.manager.action.GiftAction" method="printTicket">
+    		<!-- <result name="success">pdf.jsp</result> -->
+    		<result name="success">success.jsp</result>
+    	</action>
+    	
+        
+        <!-- Shop -->
+        <action name="gotoAddShop" class="com.manager.action.ShopAction" method="jump">
+    		<result name="success">addShop.jsp</result>
+    	</action>
+    	
+    	<action name="addShop" class="com.manager.action.ShopAction" method="addShop">
+    		<result name="success" type="chain">queryShopByName</result>
+    	</action>
+    	
+    	<action name="queryShopByName" class="com.manager.action.ShopAction" method="queryShopByName">
+    		<result name="success">shopList.jsp</result>
+    	</action>
+    	
+    	<action name="queryOpenShopByName" class="com.manager.action.ShopAction" method="queryShopByName">
+    		<result name="success">openShop.jsp</result>
+    	</action>
+    	
+    	<action name="queryOpenShopByBrand" class="com.manager.action.ShopAction" method="queryShopByBrand">
+    		<result name="success">openShop.jsp</result>
+    	</action>
+    	
+    	<action name="gotoEditShop" class="com.manager.action.ShopAction" method="gotoEditShop">
+    		<result name="success">editShop.jsp</result>
+    	</action>
+    	
+    	<action name="gotoEditShop" class="com.manager.action.ShopAction" method="gotoEditShop">
+    		<result name="success">editShop.jsp</result>
+    	</action>
+    	
+    	<action name="editShop" class="com.manager.action.ShopAction" method="editShop">
+    		<result name="success" type="chain">queryShopByName</result>
+    	</action>
+    	
+    	
+    	<!-- ShopLocation -->
+        <action name="gotoAddShopLocation" class="com.manager.action.ShopLocationAction" method="gotoAddShopLocation">
+    		<result name="success">addShopLocation.jsp</result>
+    	</action>
+    	
+    	<action name="addShopLocation" class="com.manager.action.ShopLocationAction" method="addShopLocation">
+    		<result name="success" type="chain">queryShopLocation</result>
+    	</action>
+    	
+    	<action name="queryShopLocation" class="com.manager.action.ShopLocationAction" method="queryShopLocation">
+    		<result name="success">shopLocationList.jsp</result>
+    	</action>
+    	
+    	<action name="gotoEditShopLocation" class="com.manager.action.ShopLocationAction" method="gotoEditShopLocation">
+    		<result name="success">editShopLocation.jsp</result>
+    	</action>
+    	
+    	<action name="gotoEditShopLocation" class="com.manager.action.ShopLocationAction" method="gotoEditShopLocation">
+    		<result name="success">editShopLocation.jsp</result>
+    	</action>
+    	
+    	<action name="editShopLocation" class="com.manager.action.ShopLocationAction" method="editShopLocation">
+    		<result name="success" type="chain">queryShopLocation</result>
+    	</action>
+    	
+    	<action name="onSelectShop" class="com.manager.action.ShopLocationAction" method="onSelectShop">
+    	</action>
+    	
+    	<!-- ShopBrand -->
+        <action name="gotoAddShopBrand" class="com.manager.action.ShopBrandAction" method="jump">
+    		<result name="success">addShopBrand.jsp</result>
+    	</action>
+    	
+    	<action name="addShopBrand" class="com.manager.action.ShopBrandAction" method="addShopBrand">
+    		<result name="success" type="chain">queryShopBrand</result>
+    	</action>
+    	
+    	<action name="queryShopBrand" class="com.manager.action.ShopBrandAction" method="queryShopBrand">
+    		<result name="success">shopBrandList.jsp</result>
+    	</action>
+    	
+    	<action name="gotoEditShopBrand" class="com.manager.action.ShopBrandAction" method="gotoEditShopBrand">
+    		<result name="success">editShopBrand.jsp</result>
+    	</action>
+    	
+    	<action name="gotoEditShopBrand" class="com.manager.action.ShopBrandAction" method="gotoEditShopBrand">
+    		<result name="success">editShopBrand.jsp</result>
+    	</action>
+    	
+    	<action name="editShopBrand" class="com.manager.action.ShopBrandAction" method="editShopBrand">
+    		<result name="success" type="chain">queryShopBrand</result>
+    	</action>
+    	
+    	
+    	<!-- Member -->
+        <action name="gotoAddMember" class="com.manager.action.MemberAction" method="jump">
+    		<result name="success">addMember.jsp</result>
+    	</action>
+    	
+    	<action name="addMember" class="com.manager.action.MemberAction" method="addMember">
+<!--    		<result name="success" type="chain">queryMemberByName</result>-->
+			<result name="success" type="chain">queryMember</result>
+    	</action>
+    	
+    	<action name="queryMemberByName" class="com.manager.action.MemberAction" method="queryMemberByName">
+    		<result name="success">memberList.jsp</result>
+    	</action>
+    	
+    	<action name="queryMemberByModel" class="com.manager.action.MemberAction" method="queryMemberByModel">
+    		<result name="success">memberList.jsp</result>
+    	</action>
+    	
+    	<action name="queryMemberSendSms" class="com.manager.action.MemberAction" method="queryMemberByModel">
+    		<result name="success">sendSms.jsp</result>
+    	</action>
+    	
+    	<action name="jumptoSendSms" class="com.manager.action.MemberAction" method="jump">
+    		<result name="success">sendSms1.jsp</result>
+    	</action>
+    	
+    	<action name="sendSms" class="com.manager.action.MemberAction" method="sendSms">
+    		<result name="success">success.jsp</result>
+    	</action>
+    	
+    	<action name="gotoEditMember" class="com.manager.action.MemberAction" method="gotoEditMember">
+    		<result name="success">editMember.jsp</result>
+    	</action>
+    	
+    	<action name="gotoEditMember" class="com.manager.action.MemberAction" method="gotoEditMember">
+    		<result name="success">editMember.jsp</result>
+    	</action>
+    	
+    	<action name="editMember" class="com.manager.action.MemberAction" method="editMember">
+    		<result name="success" type="chain">queryMemberByName</result>
+    	</action>
+    	
+    	<action name="gotoManagerMember" class="com.manager.action.MemberAction" method="jump">
+    		<result name="success">managerMember.jsp</result>
+    	</action>
+    	
+    	<action name="abateMember" class="com.manager.action.MemberAction" method="abateMember">
+    		<result name="success" >success.jsp</result>
+    	</action>
+    	
+    	<action name="deleteMember" class="com.manager.action.MemberAction" method="deleteMember">
+    		<result name="success" >success.jsp</result>
+    	</action>
+    	
+    	<action name="auditMember" class="com.manager.action.MemberAction" method="auditMember">
+<!--    		<result name="success" >success.jsp</result>-->
+    		<result name="success" type="redirect">queryMemberByModel.action?verifyStatus=0&amp;status=2</result>
+    	</action>
+    	
+    	<action name="thawMember" class="com.manager.action.MemberAction" method="thawMember">
+    		<result name="success" >success.jsp</result>
+    	</action>
+    	
+    	<action name="repairCard" class="com.manager.action.MemberAction" method="repairCard">
+    		<result name="success" >success.jsp</result>
+    	</action>
+    	
+    	<action name="gotoAddScore" class="com.manager.action.MemberAction" method="jump">
+    		<result name="success" >addScore.jsp</result>
+    	</action>
+    	
+    	<action name="queryMember" class="com.manager.action.MemberAction" method="queryMember">
+    		<result name="success" >addScore.jsp</result>
+    	</action>
+    	
+    	<action name="gotoAddScore" class="com.manager.action.MemberAction" method="jump">
+    		<result name="success" >addScore.jsp</result>
+    	</action>
+    	
+    	<action name="isExist" class="com.manager.action.MemberAction" method="isExist">
+    	</action>
+    	
+    	<action name="viewMember" class="com.manager.action.MemberAction" method="viewMember">
+    		<result name="success" >viewMember.jsp</result>
+    	</action>
+    	
+    	<!-- ScoreLine -->
+    	<action name="addScore" class="com.manager.action.ScoreLineAction" method="addScore">
+    		<result name="success" >success2.jsp</result>
+    	</action>
+    	
+    	<action name="queryScoreLine" class="com.manager.action.ScoreLineAction" method="queryScoreLine">
+    		<result name="success" >scoreLineList.jsp</result>
+    	</action>
+    	
+    	<action name="gotoModifyScoreLine" class="com.manager.action.ScoreLineAction" method="gotoModifyScoreLine">
+    		<result name="success" >editScoreLine.jsp</result>
+    	</action>
+    	
+    	<action name="addScoreLineModify" class="com.manager.action.ScoreLineAction" method="addScoreLineModify">
+    		<result name="success" type="chain">queryMemberByModel</result>
+    	</action>
+        
+	</package>
+	
+	<package name="validateCode" extends="default" namespace="/validateCode">
+		<result-types>
+			<result-type name="image" class="com.manager.action.ValidateImageResult" />
+		</result-types>
+		<default-interceptor-ref name="validationStack" />
+		<!--validateCode action-->
+		<action name="validateCode" class="com.manager.action.ValidateCodeAction">
+			<result name="create" type="image">
+				<param name="location">letting.jsp</param>
+			</result>
+		</action>
+		<!--end-->
+	</package>
+	
+<!--	报表-->
+	<package name="report" extends="default" namespace="/report">
+<!--		礼品信息报表-->
+		<action name="queryGiftReport" class="com.manager.action.ReportAction" method="queryGiftReport">
+    		<result name="success" >giftReportList.jsp</result>
+    	</action>
+    	<action name="exportGiftReport" class="com.manager.action.ReportAction" method="exportGiftReport">
+    	</action>
+    	
+<!--    	商户信息报表-->
+    	<action name="queryShopReport" class="com.manager.action.ReportAction" method="queryShopReport">
+    		<result name="success" >shopReportList.jsp</result>
+    	</action>
+    	<action name="exportShopReport" class="com.manager.action.ReportAction" method="exportShopReport">
+    	</action>
+    	
+<!--    	会员信息报表-->
+    	<action name="queryMemberReport" class="com.manager.action.ReportAction" method="queryMemberReport">
+    		<result name="success" >memberReportList.jsp</result>
+    	</action>
+    	<action name="exportMemberReport" class="com.manager.action.ReportAction" method="exportMemberReport">
+    	</action>
+    	
+<!--    	积分录入报表-->
+    	<action name="queryScoreLineReport" class="com.manager.action.ReportAction" method="queryScoreLineReport">
+    		<result name="success" >scoreLineReportList.jsp</result>
+    	</action>
+    	<action name="exportScoreLineReport" class="com.manager.action.ReportAction" method="exportScoreLineReport">
+    	</action>
+    	
+<!--    	积分兑换报表-->
+    	<action name="queryExchangeReport" class="com.manager.action.ReportAction" method="queryExchangeReport">
+    		<result name="success" >exchangeReportList.jsp</result>
+    	</action>
+    	<action name="exportExchangeReport" class="com.manager.action.ReportAction" method="exportExchangeReport">
+    	</action>
+    	
+<!--    	积分修改报表-->
+		<action name="queryScoreModifyReport" class="com.manager.action.ReportAction" method="queryScoreModifyReport">
+    		<result name="success" >scoreModifyReportList.jsp</result>
+    	</action>
+    	<action name="exportScoreModifyReport" class="com.manager.action.ReportAction" method="exportScoreModifyReport">
+    	</action>
+	</package>
+	
+	<include file="wx-struts.xml"/>
+	
+</struts>

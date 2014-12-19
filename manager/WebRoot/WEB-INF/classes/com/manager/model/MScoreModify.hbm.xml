@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.manager.model.MScoreModify" table="M_SCORE_MODIFY">
+		<id name="modifyId" >
+			<generator class="increment"/>
+		</id>
+		
+		<property name="recordId" type="java.lang.Integer" column="RECORDID" />
+		<property name="memberId" type="java.lang.Integer" column="MEMBERID" />
+		<property name="shopId" type="java.lang.Integer" column="SHOPID" />
+		<property name="locationId" type="java.lang.Integer" column="LOCATIONID" />
+		<property name="brand" type="java.lang.String" column="BRAND" />
+		<property name="amount" type="java.lang.Integer" column="AMOUNT" />
+		<property name="score" type="java.lang.Integer" column="SCORE" />
+		<property name="comment" type="java.lang.String" column="COMMENT" />
+		<property name="modifyDate" type="java.util.Date" column="MODIFYDATE" />
+		<property name="userId" type="java.lang.String" column="USERID" />
+		<property name="status" type="java.lang.Integer" column="STATUS" />
+		<property name="verifyStatus" type="java.lang.Integer" column="VERIFYSTATUS" />
+		<property name="verifier" type="java.lang.String" column="VERIFIER" />
+	</class>
+</hibernate-mapping>

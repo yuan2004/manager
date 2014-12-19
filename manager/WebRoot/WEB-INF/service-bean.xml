@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+
+	<!-- ================SERVICE================ -->
+	<bean id="baseService" class="com.manager.service.BaseService">
+		<property name="baseDao">
+			<ref bean="baseDao" />
+		</property>
+		<property name="userDao">
+			<ref bean="userDao" />
+		</property>
+		<property name="giftDao">
+			<ref bean="giftDao" />
+		</property>
+		<property name="shopDao">
+			<ref bean="shopDao" />
+		</property>
+		<property name="shopLocationDao">
+			<ref bean="shopLocationDao" />
+		</property>
+		<property name="shopBrandDao">
+			<ref bean="shopBrandDao" />
+		</property>
+		<property name="memberDao">
+			<ref bean="memberDao" />
+		</property>
+		<property name="reportDao">
+			<ref bean="reportDao" />
+		</property>
+		<property name="scoreLineDao">
+			<ref bean="scoreLineDao" />
+		</property>
+	</bean>
+	
+	<bean id="userService" class="com.manager.service.UserService" parent="baseService" />
+	
+	<bean id="giftService" class="com.manager.service.GiftService" parent="baseService" />
+	
+	<bean id="shopService" class="com.manager.service.ShopService" parent="baseService" />
+	
+	<bean id="shopLocationService" class="com.manager.service.ShopLocationService" parent="baseService" />
+	
+	<bean id="shopBrandService" class="com.manager.service.ShopBrandService" parent="baseService" />
+	
+	<bean id="memberService" class="com.manager.service.MemberService" parent="baseService" />
+	
+	<bean id="reportService" class="com.manager.service.ReportService" parent="baseService" />
+	
+	<bean id="scoreLineService" class="com.manager.service.ScoreLineService" parent="baseService" />
+	
+</beans>

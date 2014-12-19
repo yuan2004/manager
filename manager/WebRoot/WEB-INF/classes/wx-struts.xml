@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	
+	<package name="wx" namespace="/wx" extends="default">
+		<default-interceptor-ref name="defaultStack" />
+		<action name="GetCardInfo" class="com.manager.action.WeixinAction" method="getCardInfo">
+    	</action>
+    	
+    	<action name="GetBlance" class="com.manager.action.WeixinAction" method="getBlance">
+    	</action>
+    	
+    	<action name="GetExchangeDetails" class="com.manager.action.WeixinAction" method="getExchangeDetails">
+    	</action>
+    	
+    	<action name="GetPointDetails" class="com.manager.action.WeixinAction" method="getPointDetails">
+    	</action>
+    	
+        
+	</package>
+	
+</struts>
